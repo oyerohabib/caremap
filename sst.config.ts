@@ -11,7 +11,10 @@ export default $config({
   },
   async run() {
     const db = new sst.Secret("DatabaseUrl");
-    const web = new sst.aws.Nextjs("Web", { link: [db] });
+    const web = new sst.aws.Nextjs("Web", {
+      link: [db],
+      environment: { SITE_URL: process.env.SITE_URL ?? "" },
+    });
     return { url: web.url };
   },
 });
