@@ -1,0 +1,36 @@
+---
+description: CareMap guardrails for tenant scoping, validation, health-data handling and triage tests
+alwaysApply: true
+---
+
+# CareMap project rules
+
+CareMap is a multi-tenant telehealth intake demo. Treat it as if it held real patient data.
+
+## Tenant scoping
+- Every tenant-owned query (`intakes`, `intake_regions` via its intake, `audit_events`) must filter by `ctx.tenant.id`. No exceptions for "admin" or "debug" paths.
+- Tenant-scoped procedures use `tenantProcedure` from `src/server/api/trpc.ts`; never read the tenant from request input.
+- Lookups by id must include the tenant in the same `where`, so another tenant's id returns `NOT_FOUND`, not the row.
+- Add a tenant-isolation case to `tests/integration/intake-router.test.ts` for any new procedure.
+
+## Validation
+- Every tRPC input has a zod schema, shared from `src/lib/schemas.ts` when the client also uses it.
+- Server-derived fields (triage level, reasons, status, timestamps) are never accepted from the client; recompute them on the server.
+- Multi-row writes that belong together (intake + regions + audit events) go in one `db.transaction`.
+
+## Health data
+- No real health information anywhere: seeds, fixtures, screenshots, tests and docs use synthetic data only.
+- Never log request bodies, symptom notes or intake rows. Log ids and error codes only.
+- Never paste intake contents, notes or database rows into AI prompts, issues or PRs.
+- The intake collects no names, contact details or other identifiers. Don't add fields that do.
+- Keep the "Demo: do not enter real health information" banner on every page.
+
+## Triage
+- `src/lib/triage.ts` stays pure and deterministic: no I/O, no `Date.now()`, no randomness.
+- Every rule needs table-driven cases in `src/lib/triage.test.ts` covering just-below, at, and above its threshold.
+- Reasons shown to patients must be plain language; rule ids are for providers.
+
+## 3D
+- The canvas uses `frameloop="demand"`. Anything that animates must call `invalidate()` and stop once settled.
+- Every canvas interaction needs a non-canvas equivalent (the region list) and the canvas keeps a descriptive `aria-label`.
+- Respect `prefers-reduced-motion` via `useReducedMotion` / `MotionConfig reducedMotion="user"`.
