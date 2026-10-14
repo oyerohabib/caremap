@@ -98,9 +98,21 @@ First Playwright run: `pnpm exec playwright install chromium webkit`.
 4. Store the URL as an SST secret and deploy:
    ```bash
    pnpm sst secret set DatabaseUrl "postgres://…" --stage production
-   pnpm deploy                       # sst deploy --stage production
+   pnpm run deploy                   # sst deploy --stage production
    ```
-5. SST prints the CloudFront URL. Set `SITE_URL` to it, for absolute Open Graph URLs, and redeploy.
+   Use `pnpm run deploy`: plain `pnpm deploy` is pnpm's built-in workspace command.
+5. SST prints the CloudFront URL. Redeploy with `SITE_URL` set to it, for absolute Open Graph URLs:
+   ```bash
+   SITE_URL="https://dxxxx.cloudfront.net" pnpm run deploy
+   ```
+
+### Continuous deployment
+
+The `deploy` job in `.github/workflows/ci.yml` runs `pnpm run deploy` after `verify` passes on a push to `main`. It authenticates to AWS with GitHub OIDC, so no AWS keys are stored in GitHub. The database URL stays in the SST secret from step 4. In the repo settings, add:
+
+- a `production` environment
+- secret `AWS_DEPLOY_ROLE_ARN`: an IAM role trusted for `repo:oyerohabib/caremap:environment:production`
+- variables `AWS_REGION` and `SITE_URL`
 
 `pnpm sst:dev` runs a personal dev stage with live Lambda reloading.
 
