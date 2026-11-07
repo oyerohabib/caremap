@@ -2,15 +2,37 @@
 
 **Tap where it hurts.** CareMap is a phone-first 3D symptom intake for telehealth. A patient taps a body, describes each area, sees exactly how the intake will be routed, and sends it. The clinic's provider sees the same body with severity pins, the triage reasons, and an audit trail.
 
+**Live demo:** [https://d1dkrzv95pps61.cloudfront.net](https://d1dkrzv95pps61.cloudfront.net)
+
 > Demo only. Every intake is synthetic. The app collects no names or identifiers, and every page carries a "do not enter real health information" banner.
+
+| Landing | Patient intake (Lumen Health) |
+| :---: | :---: |
+| <img src="docs/images/homepage.png" alt="CareMap landing page with two demo clinics and a 3D body map" width="450" /> | <img src="docs/images/provider.png" alt="Lumen Health patient intake with 3D body map and region list" width="450" /> |
+| Pick a clinic, then open intake or the provider inbox. | Tap the body or use the accessible region list. |
 
 **What to try**
 
-1. Open `/` and pick a clinic (Lumen Health or Northwind Care). Each clinic has its own brand colours, which flow through the UI and into the 3D materials.
+1. Open the [live demo](https://d1dkrzv95pps61.cloudfront.net) (or `/` locally) and pick a clinic (Lumen Health or Northwind Care). Each clinic has its own brand colours, which flow through the UI and into the 3D materials.
 2. **Patient intake:** tap the chest, crank severity to 10, and watch the review step flag it as urgent, with the rule that fired.
 3. **Provider:** open the inbox. Urgent intakes come first. Open one, orbit the body, tap an area in the table to focus the camera, then press **Mark reviewed**.
 
 On desktop, the landing page shows a QR code so you can open the same URL on your phone.
+
+## Multi-tenant clinics
+
+One CareMap deployment serves multiple clinics. A **tenant** is a clinic row (slug, name, brand colours). Demo tenants are **Lumen Health** (`lumen`) and **Northwind Care** (`northwind`).
+
+How it shows up:
+
+| Layer | What happens |
+| --- | --- |
+| URL | Routes are `/t/[tenant]/…` — e.g. `/t/lumen/intake` vs `/t/northwind/provider` |
+| Branding | Primary/accent colours become CSS variables and tint the 3D materials for that clinic |
+| API | The client sends `x-tenant: lumen` (or `northwind`). `tenantProcedure` resolves the slug to a tenant id |
+| Data | Every intake query filters by `ctx.tenant.id`. Asking for another clinic's intake id returns `NOT_FOUND`, not the row |
+
+So Lumen's provider inbox never lists Northwind intakes, and the reverse. Same app and database; isolation is by tenant id on every read/write, not separate deployments.
 
 ## Architecture
 
