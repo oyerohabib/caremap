@@ -111,8 +111,10 @@ First Playwright run: `pnpm exec playwright install chromium webkit`.
 The `deploy` job in `.github/workflows/ci.yml` runs `pnpm run deploy` after `verify` passes on a push to `main`. It authenticates to AWS with GitHub OIDC, so no AWS keys are stored in GitHub. The database URL stays in the SST secret from step 4. In the repo settings, add:
 
 - a `production` environment
-- secret `AWS_DEPLOY_ROLE_ARN`: an IAM role trusted for `repo:oyerohabib/caremap:environment:production`
+- secret `AWS_DEPLOY_ROLE_ARN`: an IAM role trusted for this repo's `production` environment
 - variables `AWS_REGION` and `SITE_URL`
+
+GitHub may issue OIDC subject claims with unique IDs (`repo:oyerohabib@48946023/caremap@1418613340:environment:production`) instead of the classic `repo:oyerohabib/caremap:environment:production`. The IAM role trust policy must match the claim CloudTrail shows on a failed `AssumeRoleWithWebIdentity`.
 
 `pnpm sst:dev` runs a personal dev stage with live Lambda reloading.
 
