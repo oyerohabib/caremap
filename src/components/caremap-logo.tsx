@@ -15,7 +15,7 @@ export function CareMapLogo({ className, title = "CareMap" }: CareMapLogoProps) 
       alt={title}
       width={128}
       height={128}
-      className={cn("size-7 shrink-0 rounded-lg", className)}
+      className={cn("size-7 shrink-0", className)}
       decoding="async"
     />
   );
