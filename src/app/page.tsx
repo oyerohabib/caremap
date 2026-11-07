@@ -17,7 +17,7 @@ export default function Home() {
       <section className="flex flex-col gap-7 md:order-1">
         <div className="flex flex-col gap-4">
           <p className="flex items-center gap-2.5 text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase">
-            <CareMapLogo className="size-7" />
+            <CareMapLogo className="size-9" />
             CareMap · telehealth intake demo
           </p>
           <h1 className="text-4xl font-semibold tracking-tight text-balance md:text-6xl">
