@@ -84,11 +84,9 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: |
-        echo "Role ARN length: ${#AWS_DEPLOY_ROLE_ARN}"
-        echo "Region: $AWS_REGION"
-      - run: |
-          echo "Role ARN: $AWS_DEPLOY_ROLE_ARN"
+      - name: Debug OIDC inputs
+        run: |
+          echo "Role ARN length: ${#AWS_DEPLOY_ROLE_ARN}"
           echo "Region: $AWS_REGION"
         env:
           AWS_DEPLOY_ROLE_ARN: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
