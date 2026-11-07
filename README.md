@@ -1,4 +1,4 @@
-# CareMap
+# <img src="public/caremap-logo.png" alt="" width="36" height="36" align="absmiddle" />&nbsp;CareMap
 
 **Tap where it hurts.** CareMap is a phone-first 3D symptom intake for telehealth. A patient taps a body, describes each area, sees exactly how the intake will be routed, and sends it. The clinic's provider sees the same body with severity pins, the triage reasons, and an audit trail.
 

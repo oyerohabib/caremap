@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 export const alt = "CareMap: tap where it hurts. A 3D symptom intake for telehealth.";
@@ -54,7 +56,11 @@ function Pin({ x, y, color }: { x: number; y: number; color: string }) {
   );
 }
 
-export default function Image() {
+export default async function Image() {
+  const logoSrc = `data:image/png;base64,${(
+    await readFile(join(process.cwd(), "public/caremap-logo.png"))
+  ).toString("base64")}`;
+
   return new ImageResponse(
     (
       <div
@@ -68,27 +74,8 @@ export default function Image() {
       >
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 0 0 80px", width: 720 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 30, color: "#44403c" }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 10,
-                background: "#0F172A",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  width: 12,
-                  height: 12,
-                  borderRadius: 999,
-                  background: "#38BDF8",
-                  border: "3px solid #F7F5F2",
-                }}
-              />
-            </div>
+            {/* eslint-disable-next-line @next/next/no-img-element -- ImageResponse only supports img */}
+            <img src={logoSrc} width={36} height={36} alt="" style={{ borderRadius: 10 }} />
             CareMap
           </div>
           <div style={{ fontSize: 76, fontWeight: 700, color: "#1c1917", lineHeight: 1.05, marginTop: 24, letterSpacing: -2 }}>
