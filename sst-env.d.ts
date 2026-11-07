@@ -2,8 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /* deno-fmt-ignore-file */
+/* biome-ignore-all lint: auto-generated */
 
-import "sst"
 declare module "sst" {
   export interface Resource {
     "DatabaseUrl": {
@@ -16,4 +16,6 @@ declare module "sst" {
     }
   }
 }
+
+import "sst"
 export {}
