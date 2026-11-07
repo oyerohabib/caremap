@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { CareMapLogo } from "./caremap-logo";
 import { useTenant } from "./tenant-context";
 
 export function TenantHeader() {
@@ -19,7 +20,7 @@ export function TenantHeader() {
         href="/"
         className="flex min-w-0 items-center gap-2 rounded-md focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
       >
-        <span className="size-3 shrink-0 rounded-full bg-brand ring-4 ring-brand-accent/25" aria-hidden="true" />
+        <CareMapLogo className="size-6" />
         <span className="truncate font-semibold tracking-tight">{name}</span>
         <span className="hidden text-xs text-muted-foreground sm:inline">via CareMap</span>
       </Link>

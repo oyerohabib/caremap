@@ -5,7 +5,6 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const SKIN = "#d6d3d1";
-const BRAND = "#0f766e";
 const ACCENT = "#14b8a6";
 
 function Part({
@@ -69,7 +68,27 @@ export default function Image() {
       >
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 0 0 80px", width: 720 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 30, color: "#44403c" }}>
-            <div style={{ width: 22, height: 22, borderRadius: 999, background: BRAND }} />
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 10,
+                background: "#0F172A",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                style={{
+                  width: 12,
+                  height: 12,
+                  borderRadius: 999,
+                  background: "#38BDF8",
+                  border: "3px solid #F7F5F2",
+                }}
+              />
+            </div>
             CareMap
           </div>
           <div style={{ fontSize: 76, fontWeight: 700, color: "#1c1917", lineHeight: 1.05, marginTop: 24, letterSpacing: -2 }}>
