@@ -13,6 +13,7 @@ export function CareMapLogo({ className, title = "CareMap" }: CareMapLogoProps) 
     <img
       src="/caremap-logo.png"
       alt={title}
+      aria-hidden={title === "" ? true : undefined}
       width={128}
       height={128}
       className={cn("size-7 shrink-0", className)}
