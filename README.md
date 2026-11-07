@@ -77,7 +77,7 @@ Add `?perf` to any URL in dev to show a GPU/CPU stats overlay.
 
 | Command | What it does |
 | --- | --- |
-| `pnpm typecheck` | `tsc --noEmit` |
+| `pnpm typecheck` | `next typegen && tsc --noEmit` (generates `PageProps` / `LayoutProps` first) |
 | `pnpm lint` | ESLint |
 | `pnpm test` | Vitest: triage rules, schemas, tRPC routers incl. tenant isolation |
 | `pnpm test:e2e` | Builds, starts on :3300 with in-memory PGlite, runs Playwright (mobile WebKit + desktop Chromium) |
