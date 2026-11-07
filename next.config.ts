@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
   // request-time, and OpenNext (used by sst.aws.Nextjs) is most predictable
   // with classic dynamic rendering.
   serverExternalPackages: ["@electric-sql/pglite"],
+  experimental: {
+    agentUpgrade: "security",
+  },
   turbopack: {
     rules: {
       "*.css": {
